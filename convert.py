@@ -47,25 +47,26 @@ def gen_pattern(path):
 
                 # print(px)
         PIL_image = Image.fromarray(np.uint8(all_px)).convert('L')
-        PIL_image.save(os.path.join(f"{path}/{person}/pattert.bmp"))
+        PIL_image.save(os.path.join(f"{path}/{person}/pattern.bmp"))
         # print(all_px)
 
 def get_pattern(filename):
-    print("e")
-    #                             with open(file_path, "wb") as fh:
-    #                         img_data=str(img_data).encode("UTF-8")
-    #                         de =base64.decodebytes(bytes(img_data))
-    #                         fh.write(de)
-    
-    # px = getPixels(filename)
-
-    # PIL_image = Image.fromarray(np.uint8(px)).convert('L')
-    # save_filename = os.path.join(f"{filename}.bmp")
-    # PIL_image.save(save_filename)
-    # im = Image.open(save_filename, 'r').convert('L')
-    # im = im.resize(im_size)
-    # pix_val = np.asarray(im)
-    # return pix_val
+    save_filename = os.path.join(f"{filename}.bmp")
+    img_data = ""
+    with open(filename, 'rb') as file:
+        img_data = str(file.read())
+        img_data = img_data[24:-1]
+    with open(save_filename, "wb") as fh:
+        img_data=str(img_data).encode("UTF-8")
+        de =base64.decodebytes(bytes(img_data))
+        fh.write(de)
+    px = getPixels(save_filename)
+    PIL_image = Image.fromarray(np.uint8(px)).convert('L')
+    PIL_image.save(save_filename)
+    im = Image.open(save_filename, 'r').convert('L')
+    im = im.resize(im_size)
+    pix_val = np.asarray(im)
+    return pix_val
         
 def check_img(path, img_path):
     get_pattern(img_path)
@@ -78,4 +79,4 @@ if __name__ == "__main__":
     convert(path)
     gen_pattern(path)
     get_pattern("x.txt")
-    check_img(path,x.txt")
+    # check_img(path, "x.txt")
