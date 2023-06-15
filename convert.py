@@ -23,6 +23,7 @@ def convert(path):
                             de =base64.decodebytes(bytes(img_data))
                             fh.write(de)
                             
+                            
 
 def getPixels(filename):    
     im = Image.open(filename, 'r').convert('L')
@@ -31,7 +32,7 @@ def getPixels(filename):
     pix_val = np.asarray(im)
     return pix_val
     
-def process(path):
+def gen_pattern(path):
     for person in os.listdir(path):
         pp = os.path.join(f"{path}/{person}")
         # print(person)
@@ -46,12 +47,22 @@ def process(path):
 
                 # print(px)
         PIL_image = Image.fromarray(np.uint8(all_px)).convert('L')
-        PIL_image.save(os.path.join(f"{path}/{person}/all_px.bmp"))
+        PIL_image.save(os.path.join(f"{path}/{person}/pattert.bmp"))
         print(all_px)
+
+def get_pattern(filename):
+    px = getPixels(filename)
+    PIL_image = Image.fromarray(np.uint8(px)).convert('L')
+    PIL_image.save(os.path.join(f"{filename}.bmp"))
+    
+        
+def check_img(path, img_path):
+    print("Checking img")
+    
         
 if __name__ == "__main__":
     path = os.path.join("./img")
     convert(path)
-    process(path)
+    gen_pattern(path)
     
     
