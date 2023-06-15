@@ -48,15 +48,28 @@ def gen_pattern(path):
                 # print(px)
         PIL_image = Image.fromarray(np.uint8(all_px)).convert('L')
         PIL_image.save(os.path.join(f"{path}/{person}/pattert.bmp"))
-        print(all_px)
+        # print(all_px)
 
 def get_pattern(filename):
-    px = getPixels(filename)
-    PIL_image = Image.fromarray(np.uint8(px)).convert('L')
-    PIL_image.save(os.path.join(f"{filename}.bmp"))
+    print("e")
+    #                             with open(file_path, "wb") as fh:
+    #                         img_data=str(img_data).encode("UTF-8")
+    #                         de =base64.decodebytes(bytes(img_data))
+    #                         fh.write(de)
     
+    # px = getPixels(filename)
+
+    # PIL_image = Image.fromarray(np.uint8(px)).convert('L')
+    # save_filename = os.path.join(f"{filename}.bmp")
+    # PIL_image.save(save_filename)
+    # im = Image.open(save_filename, 'r').convert('L')
+    # im = im.resize(im_size)
+    # pix_val = np.asarray(im)
+    # return pix_val
         
 def check_img(path, img_path):
+    get_pattern(img_path)
+    print(get_pattern(img_path))
     print("Checking img")
     
         
@@ -64,5 +77,5 @@ if __name__ == "__main__":
     path = os.path.join("./img")
     convert(path)
     gen_pattern(path)
-    
-    
+    get_pattern("x.txt")
+    check_img(path,x.txt")
