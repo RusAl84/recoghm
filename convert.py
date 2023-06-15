@@ -69,7 +69,7 @@ def get_pattern(filename):
     return pix_val
         
 def check_img(path, img_path):
-    get_pattern(img_path)
+    pt = get_pattern(img_path)
     print(get_pattern(img_path))
     print("Checking img")
     
