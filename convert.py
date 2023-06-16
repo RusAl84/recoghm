@@ -36,20 +36,20 @@ def gen_pattern(path):
     for person in os.listdir(path):
         pp = os.path.join(f"{path}/{person}")
         # print(person)
-        all_px=np.empty([im_size[1],im_size[0]])
-        for filename in os.listdir(pp):
-            if filename.endswith(".png"):
-                filename = os.path.join(f"{path}/{person}/{filename}")
-                px = getPixels(filename)
-                for i in range(im_size[1]):
-                    for j in range(im_size[0]):
-                        all_px[i,j]+=px[i,j]
-
-                # print(px)
-        PIL_image = Image.fromarray(np.uint8(all_px)).convert('L')
-        PIL_image.save(os.path.join(f"{path}/{person}/pattern.bmp"))
-        # print(all_px)
-
+        person_pattern_file=f"{path}/{person}/pattern.bmp"
+        if not os.path.exists(person_pattern_file):
+            all_px=np.empty([im_size[1],im_size[0]])
+            for filename in os.listdir(pp):
+                if filename.endswith(".png"):
+                    filename = os.path.join(f"{path}/{person}/{filename}")
+                    px = getPixels(filename)
+                    for i in range(im_size[1]):
+                        for j in range(im_size[0]):
+                            all_px[i,j]+=px[i,j]
+            PIL_image = Image.fromarray(np.uint8(all_px)).convert('L')
+            PIL_image.save(os.path.join(person_pattern_file))
+            
+            
 def get_pattern(filename):
     save_filename = os.path.join(f"{filename}.bmp")
     img_data = ""
@@ -76,7 +76,7 @@ def check_img(path, img_path):
         # https://stackoverflow.com/questions/1401712/how-can-the-euclidean-distance-be-calculated-with-numpy       
         im = Image.open(pt_path, 'r').convert('L')
         person_pt = np.asarray(im)
-        dist = np.linalg.norm(pt-person_pt)
+        dist = np.linalg.norm(person_pt-pt)
         results[person]=dist
     print(results)
         
@@ -85,3 +85,4 @@ if __name__ == "__main__":
     convert(path)
     gen_pattern(path)
     check_img(path, "x.txt")
+    check_img(path, "y.txt")
