@@ -70,13 +70,18 @@ def get_pattern(filename):
         
 def check_img(path, img_path):
     pt = get_pattern(img_path)
-    print(get_pattern(img_path))
-    print("Checking img")
-    
+    results={}
+    for person in os.listdir(path):
+        pt_path=f"{path}/{person}/pattern.bmp" 
+        # https://stackoverflow.com/questions/1401712/how-can-the-euclidean-distance-be-calculated-with-numpy       
+        im = Image.open(pt_path, 'r').convert('L')
+        person_pt = np.asarray(im)
+        dist = np.linalg.norm(pt-person_pt)
+        results[person]=dist
+    print(results)
         
 if __name__ == "__main__":
     path = os.path.join("./img")
     convert(path)
     gen_pattern(path)
-    get_pattern("x.txt")
-    # check_img(path, "x.txt")
+    check_img(path, "x.txt")
